@@ -1,0 +1,40 @@
+﻿@model DeletePersonViewModel
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@string.Format(Resources.DeletePersonTitle, Model.Command.Firstname, Model.Command.Lastname)</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="@Resources.Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form method="post" asp-controller="Person" asp-action="Delete" name="delete-person-form">
+            <input type="hidden" asp-for="Command.Id" />
+            <input type="hidden" asp-for="Command.Firstname" />
+            <input type="hidden" asp-for="Command.Lastname" />
+            <input type="hidden" asp-for="Command.RunCommand" value="true" />
+
+            <div class="modal-body">
+                <div class="form-group text-danger" asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <p>@string.Format(Resources.DeletePersonMessage, Model.Command.Firstname, Model.Command.Lastname)</p>
+                    <p>@Resources.ContinueQuestion</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input name="delete-person-submit" type="button" class="btn btn-danger" value="@Resources.Delete" />
+                <input type="button" class="btn btn-link" data-dismiss="modal" value="@Resources.Cancel" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U=">
+    $(document).ready(function () {
+        $('input[name=delete-person-submit]').click(function (event) { ModalManager.SubmitForm('persons-modal'); });
+    });
+</script>

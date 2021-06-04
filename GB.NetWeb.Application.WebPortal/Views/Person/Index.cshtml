@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = Resources.Persons;
+}
+
+<div class="row">
+    <div class="col-12 jumbotron">
+        <h1 class="display-4">@Resources.Persons</h1>
+        <p class="lead">@Resources.PersonsSubtitle </p>
+
+        @{
+            if (User.HasPermission(Permissions.WritePerson))
+            {
+                <hr class="my-4" />
+                <button name="create-person-btn" class="btn btn-success" data-modal="ajax-modal" data-toggle="tooltip" data-placement="right" title="@Resources.CreateNewPerson"><i class="fa fa-plus"></i> @Resources.Create</button>
+            }
+        }
+    </div>
+
+    <div class="col-12" id="persons-list"></div>
+
+    <form name="persons-modal-form" method="post" asp-controller="" asp-action=""></form>
+
+    <div class="modal fade" id="persons-modal"></div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" asp-src-include="~/js/DateManager.js" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U="></script>
+    <script type="text/javascript" asp-src-include="~/js/FormManager.js" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U="></script>
+    <script type="text/javascript" asp-src-include="~/js/ModalManager.js" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U="></script>
+    <script type="text/javascript" asp-src-include="~/js/PersonManager.js" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U="></script>
+    <script type="text/javascript" asp-src-include="~/js/TableManager.js" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U="></script>
+    <script type="text/javascript" asp-src-include="~/js/TooltipManager.js" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U="></script>
+
+    <script type="text/javascript" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U=">
+        $(document).ready(function () {
+            $('button[name=create-person-btn]').click(function (event) { PersonManager.OpenCreateModal(); });
+            PersonManager.List();
+        });
+    </script>
+}

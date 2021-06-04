@@ -1,0 +1,52 @@
+﻿@model UpdatePersonViewModel
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@string.Format(Resources.EditPersonTitle, Model.Command.Firstname, Model.Command.Lastname)</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="@Resources.Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form asp-controller="Person" asp-action="Update" method="post" name="update-person-form">
+            <input type="hidden" asp-for="Command.Id" />
+            <input type="hidden" asp-for="Command.RunCommand" value="true" />
+
+            <div class="modal-body">
+                <div class="form-group text-danger" asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <label asp-for="Command.Firstname">@Resources.Firstname <span class="text-danger">*</span></label>
+                    <input class="form-control" placeholder="@Resources.Firstname" asp-for="Command.Firstname" />
+                    <span class="text-warning" asp-validation-for="Command.Firstname"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Command.Lastname">@Resources.Lastname <span class="text-danger">*</span></label>
+                    <input class="form-control" placeholder="@Resources.Lastname" asp-for="Command.Lastname" />
+                    <span class="text-warning" asp-validation-for="Command.Lastname"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Command.Birthdate">@Resources.Birthdate <span class="text-danger">*</span></label>
+                    <input class="form-control datepicker" asp-for="Command.Birthdate" asp-format="{0:yyyy-MM-dd}" />
+                    <span class="text-warning" asp-validation-for="Command.Birthdate"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input name="edit-person-submit" type="button" class="btn btn-success" value="@Resources.Edit" />
+                <input type="button" class="btn btn-link" data-dismiss="modal" value="@Resources.Cancel" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" asp-append-version="true" nonce="TmV0V2ViQ3NwSGVhZGVyTm9uY2U=">
+    $(document).ready(function () {
+        DateManager.EnableDefault();
+        $('input[name=edit-person-submit]').click(function (event) { ModalManager.SubmitForm('persons-modal'); });
+    });
+</script>

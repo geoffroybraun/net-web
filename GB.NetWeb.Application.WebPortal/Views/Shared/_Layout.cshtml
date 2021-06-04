@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Resources.MainTitle</title>
+    <link rel="stylesheet" type="text/css" href="@CssFiles.BootstrapBundle.Item1" integrity="@CssFiles.BootstrapBundle.Item2" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="@CssFiles.Datatables.Item1" />
+    <link rel="stylesheet" type="text/css" href="@CssFiles.BootstrapDatePicker.Item1" integrity="@CssFiles.BootstrapDatePicker.Item2" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="@CssFiles.FontAwesome.Item1" integrity="@CssFiles.FontAwesome.Item2" crossorigin="anonymous" />
+</head>
+<body>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> @Resources.Home</a>
+
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                @{
+                                    if (User.HasPermission(Permissions.ReadPerson))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="Index"><i class="fa fa-user-friends"></i> @Resources.Persons</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+
+                            <a class="btn btn-outline-danger" asp-area="" asp-controller="Authentication" asp-action="Logout"><i class="fa fa-sign-out-alt"></i> @Resources.Logout</a>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        }
+    }
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; @DateTime.UtcNow.Year - @Resources.MainTitle
+                </div>
+            </footer>
+        }
+    }
+    <script type="text/javascript" src="@JsFiles.JQuery.Item1" integrity="@JsFiles.JQuery.Item2" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="@JsFiles.BootstrapBundle.Item1" integrity="@JsFiles.BootstrapBundle.Item2" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="@JsFiles.DataTables.Item1"></script>
+    <script type="text/javascript" src="@JsFiles.BootstrapDatePicker.Item1" integrity="@JsFiles.BootstrapDatePicker.Item2" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
